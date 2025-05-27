@@ -44,6 +44,14 @@ const Notebook = () => {
                 setIsLoading(false);
             }
          }
+
+         useEffect(() => {
+            console.log("Check unchanged, wait 1 second before updating firestore, blah blah blah.")
+            if (input === notebook?.content) {
+                return;
+            }
+        }, []);
     };
+    
 
 export default Notebook;
