@@ -1,18 +1,33 @@
+// App.tsx
+
 import React from 'react';
-import logo from './logo.svg';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { AuthProvider, useAuth } from './contexts/authContext';
+import Home from './home/home';
+import Login from './signin/signin';
+import Signup from './signup/signup';
 import './App.css';
 
-function App() {
+const AppContent: React.FC = () => {
+  const { currentUser } = useAuth();
+
+  return currentUser ? <Home /> : <Signup />;
+};
+
+const App: React.FC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          This will soon be the PAS Secretary meeting note application. For now, have a spinning React logo.
-        </p>
-      </header>
-    </div>
+    <AuthProvider>
+     
+        <Router>
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/" element={<AppContent />} />
+          </Routes>
+        </Router>
+    
+    </AuthProvider>
   );
-}
+};
 
 export default App;
