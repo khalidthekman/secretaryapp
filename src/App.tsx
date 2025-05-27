@@ -7,17 +7,17 @@ import Home from './home/home';
 import Login from './signin/signin';
 import Signup from './signup/signup';
 import './App.css';
-
+import { NotebookProvider } from './contexts/notebookContexts';
 const AppContent: React.FC = () => {
   const { currentUser } = useAuth();
 
-  return currentUser ? <Home /> : <Signup />;
+  return currentUser ? <Home /> : <Login />;
 };
 
 const App: React.FC = () => {
   return (
     <AuthProvider>
-     
+      <NotebookProvider>
         <Router>
           <Routes>
             <Route path="/login" element={<Login />} />
@@ -25,7 +25,7 @@ const App: React.FC = () => {
             <Route path="/" element={<AppContent />} />
           </Routes>
         </Router>
-    
+      </NotebookProvider>
     </AuthProvider>
   );
 };

@@ -4,7 +4,7 @@ import { useNotebooks } from '../contexts/notebookContexts'
 import { auth } from '../firebaseConfig'
 import { signOut } from 'firebase/auth'
 import { format } from 'date-fns'
-
+import './home.css'
 const Home = () => {
         const handleLogout = () => {
         signOut(auth)
@@ -26,8 +26,8 @@ const Home = () => {
     }
     return (
         <div>
+            <title>PAS Meeting Notes</title>
             <h1>Welcome to the PAS Student Council Meeting Notes App!</h1>
-
             <form onSubmit={handleAddNotebook} className="add-notebook-form">
                 <input
                     type="text"
