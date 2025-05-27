@@ -50,7 +50,32 @@ const Notebook = () => {
             if (input === notebook?.content) {
                 return;
             }
-        }, []);
+            
+            setIsLoading(true); 
+
+            const getData = setTimeout(() => {
+                console.log("updating Firestore...");
+                updateNoteInFirestore(input);
+            }, 1000)
+            return () => clearTimeout(getData)
+
+        }, [input, notebook?.content]);
+
+        return (
+            <div className="notebook-container">
+                <div className='title-loader'>
+                    {!isLoading && <h1>{notebook?.title ?? "Notes"}</h1>}
+                    {isLoading && <div className='loading-animation'>
+                        <p>Saving...</p>
+                        </div>}
+                        <textarea
+                        value={input}
+                        onChange={(e) => setInput(e.target.value)}
+                        placeholder="Summarize Meeting Notes: (Include Secretary Name and Date"
+                        />
+                </div>
+            </div>
+        );
     };
     
 

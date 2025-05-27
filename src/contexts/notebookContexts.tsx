@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { Timestamp, addDoc, collection, deleteDoc, doc, getDocs, query, where } from 'firebase/firestore';
+import { Timestamp, addDoc, collection, deleteDoc, doc, getDocs } from 'firebase/firestore';
 import { db, auth } from '../firebaseConfig';
 
 export interface NotebookData {
@@ -31,14 +31,10 @@ export const useNotebooks = () => {
 export const NotebookProvider = ({ children }: { children: ReactNode }) => {
   const [notebooks, setNotebooks] = useState<NotebookData[]>([]);
 
+  // Fetch all notebooks, not just those for the current user
   const fetchNotebooks = async () => {
-  
-    if (!auth.currentUser) return;
-  
     const notebooksCollection = collection(db, 'notebooks');
-    const notebooksQuery = query(notebooksCollection, where('uid', '==', auth.currentUser.uid));
-    const notebookSnapshot = await getDocs(notebooksQuery);
-  
+    const notebookSnapshot = await getDocs(notebooksCollection);
     const notebookList = notebookSnapshot.docs.map((doc) => ({
       id: doc.id,
       title: doc.data().title,
@@ -47,7 +43,6 @@ export const NotebookProvider = ({ children }: { children: ReactNode }) => {
       color: doc.data().color,
       tintColor: doc.data().tintColor
     }));
-  
     setNotebooks(notebookList.sort((a, b) => b.createdAt - a.createdAt));
   }
 
@@ -66,10 +61,8 @@ export const NotebookProvider = ({ children }: { children: ReactNode }) => {
     return pastelColors[randomIndex];
   }
 
+  // Do not set uid when adding a notebook
   const addNote = async (title: string) => {
-
-    if (!auth.currentUser) return;
-    
     const newDate = Timestamp.fromDate(new Date());
     const randomPastelColor = getRandomPastelColor();
     const randomTintColor = tintColors[pastelColors.indexOf(randomPastelColor)];  
@@ -79,7 +72,6 @@ export const NotebookProvider = ({ children }: { children: ReactNode }) => {
         title,
         content: '',
         createdAt: newDate,
-        uid: auth.currentUser.uid,
         color: randomPastelColor,
         tintColor: randomTintColor
       });

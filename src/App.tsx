@@ -6,6 +6,7 @@ import { AuthProvider, useAuth } from './contexts/authContext';
 import Home from './home/home';
 import Login from './signin/signin';
 import Signup from './signup/signup';
+import Notebook from './notebook/notebook'
 import './App.css';
 import { NotebookProvider } from './contexts/notebookContexts';
 const AppContent: React.FC = () => {
@@ -23,6 +24,7 @@ const App: React.FC = () => {
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/" element={<AppContent />} />
+            <Route path="/notebook/:id" element={<Notebook />} />
           </Routes>
         </Router>
       </NotebookProvider>
