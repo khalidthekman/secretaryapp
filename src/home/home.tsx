@@ -33,7 +33,7 @@ const Home = () => {
                     type="text"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
-                    placeholder="New Notebook Title"
+                    placeholder="Enter Secretary First and Last Name"
                     />
                 <button type="submit">Add Meeting Log</button>
             </form>

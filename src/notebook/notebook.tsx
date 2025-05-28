@@ -64,14 +64,14 @@ const Notebook = () => {
         return (
             <div className="notebook-container">
                 <div className='title-loader'>
-                    {!isLoading && <h1>{notebook?.title ?? "Notes"}</h1>}
+                    {!isLoading && <h1>{notebook?.title ?? "Meeting Notes"}</h1>}
                     {isLoading && <div className='loading-animation'>
                         <p>Saving...</p>
                         </div>}
                         <textarea
                         value={input}
                         onChange={(e) => setInput(e.target.value)}
-                        placeholder="Summarize Meeting Notes: (Include Secretary Name and Date"
+                        placeholder="Summarize Meeting Notes: "
                         />
                 </div>
             </div>
